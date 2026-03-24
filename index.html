@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Frontend Developer Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet"/>
+  <style>
+/* =============================================
+   CSS VARIABLES (Color Scheme + Dark Mode)
+   ============================================= */
+:root {
+  --bg:         #f5f4f0;
+  --bg2:        #ffffff;
+  --text:       #1a1a1a;
+  --text-muted: #666;
+  --accent:     #2563eb;
+  --accent2:    #1d4ed8;
+  --border:     #e0ddd6;
+  --card-bg:    #ffffff;
+  --sidebar-bg: #1a1a1a;
+  --sidebar-text: #f0ede6;
+  --sidebar-muted: #aaa;
+  --radius:     12px;
+  --shadow:     0 2px 16px rgba(0,0,0,0.08);
+  --font-head:  'Syne', sans-serif;
+  --font-body:  'DM Sans', sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg:         #111110;
+    --bg2:        #1c1c1b;
+    --text:       #f0ede6;
+    --text-muted: #888;
+    --accent:     #3b82f6;
+    --accent2:    #60a5fa;
+    --border:     #2a2a28;
+    --card-bg:    #1c1c1b;
+    --sidebar-bg: #0d0d0c;
+    --sidebar-text: #f0ede6;
+    --shadow:     0 2px 16px rgba(0,0,0,0.4);
+  }
+}
+
+/* =============================================
+   RESET & BASE
+   ============================================= */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--text);
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+a { text-decoration: none; color: inherit; }
+ul { list-style: none; }
+img { max-width: 100%; display: block; }
+
+/* =============================================
+   NAVBAR
+   ============================================= */
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2rem;
+  height: 60px;
+  background: var(--bg2);
+  border-bottom: 1px solid var(--border);
+  box-shadow: 0 1px 8px rgba(0,0,0,0.06);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: 1.05rem;
+}
+
+.logo-img{
+  width:50px;
+  height:50px;
+  border-radius:6px;
+  object-fit:cover;
+}
+
+.nav-links {
+  display: flex;
+  gap: 2rem;
+}
+
+.nav-links a {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  transition: color 0.2s;
+}
+
+.nav-links a:hover { color: var(--accent); }
+
+.hamburger {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 1.4rem;
+  cursor: pointer;
+  color: var(--text);
+}
+
+/* =============================================
+   HERO SECTION
+   ============================================= */
+.hero {
+  background: var(--sidebar-bg);
+  color: var(--sidebar-text);
+  padding: 5rem 2rem 4rem;
+  text-align: center;
+}
+
+.hero-tag {
+  display: inline-block;
+  background: rgba(37,99,235,0.2);
+  color: var(--accent2);
+  border: 1px solid rgba(37,99,235,0.3);
+  padding: 4px 14px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  margin-bottom: 1.2rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.hero h1 {
+  font-family: var(--font-head);
+  font-size: clamp(2.5rem, 8vw, 4.5rem);
+  font-weight: 800;
+  line-height: 1.1;
+  margin-bottom: 1rem;
+}
+
+.hero h1 span { color: var(--accent2); }
+
+.hero-sub {
+  color: var(--sidebar-muted);
+  font-size: 1rem;
+  margin-bottom: 2rem;
+  letter-spacing: 0.05em;
+}
+
+.hero-btns {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* =============================================
+   BUTTONS
+   ============================================= */
+.btn {
+  padding: 10px 24px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  font-family: var(--font-body);
+  cursor: pointer;
+  transition: all 0.2s;
+  border: 2px solid transparent;
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+
+.btn-primary:hover {
+  background: var(--accent2);
+  border-color: var(--accent2);
+  transform: translateY(-1px);
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--sidebar-text);
+  border-color: rgba(255,255,255,0.3);
+}
+
+.btn-outline:hover {
+  border-color: var(--accent);
+  color: var(--accent2);
+}
+
+/* =============================================
+   MAIN LAYOUT (Sidebar + Content)
+   ============================================= */
+.main-layout {
+  display: flex;
+  align-items: flex-start;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  gap: 2rem;
+}
+
+/* =============================================
+   SIDEBAR
+   ============================================= */
+.sidebar {
+  width: 280px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  position: sticky;
+  top: 76px;
+  max-height: calc(100vh - 80px);
+  overflow-y: auto;
+}
+
+.sidebar-card {
+  background: var(--sidebar-bg);
+  color: var(--sidebar-text);
+  border-radius: var(--radius);
+  padding: 1.2rem;
+  box-shadow: var(--shadow);
+}
+
+.profile-card {
+  text-align: center;
+}
+
+.avatar {
+  width: 64px;
+  height: 64px;
+  background: #444;
+  border-radius: 12px;
+  margin: 0 auto 0.8rem;
+}
+
+.profile-card h2 {
+  font-family: var(--font-head);
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.role-tag {
+  color: var(--accent2);
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin: 4px 0;
+}
+
+.sidebar-note {
+  font-size: 0.78rem;
+  color: var(--sidebar-muted);
+}
+
+.sidebar-footer {
+  text-align: center;
+  font-size: 0.78rem;
+  color: var(--sidebar-muted);
+  padding: 0.5rem;
+}
+
+/* =============================================
+   CONTENT AREA
+   ============================================= */
+.content-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  min-width: 0;
+}
+
+.content-hero {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  padding: 2.5rem 2rem;
+  text-align: center;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+}
+
+.content-hero h1 {
+  font-family: var(--font-head);
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: 800;
+}
+
+.content-hero p {
+  color: var(--text-muted);
+  margin-top: 0.4rem;
+}
+
+/* =============================================
+   3-COLUMN GRID
+   ============================================= */
+.three-col {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.col-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.2rem;
+  box-shadow: var(--shadow);
+}
+
+/* =============================================
+   SHARED COMPONENTS
+   ============================================= */
+.section-label {
+  font-family: var(--font-head);
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.8rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--accent);
+  display: inline-block;
+}
+
+.center { display: block; text-align: center; margin: 0 auto 1.2rem; }
+
+.project-list li {
+  padding: 6px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  transition: color 0.2s;
+}
+
+.sidebar-card .project-list li {
+  border-color: rgba(255,255,255,0.08);
+  color: var(--sidebar-muted);
+}
+
+.project-list li:hover { color: var(--accent); }
+.project-list li:last-child { border-bottom: none; }
+
+.exp-company {
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.2rem;
+}
+
+.exp-desc {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 0.4rem;
+}
+
+.sidebar-card .exp-desc { color: var(--sidebar-muted); }
+
+.link-blue {
+  font-size: 0.82rem;
+  color: var(--accent);
+  font-weight: 500;
+}
+.link-blue:hover { text-decoration: underline; }
+
+.mt { margin-top: 1rem !important; }
+
+.courses-title {
+  font-size: 0.82rem;
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+  margin-top: 0.4rem;
+}
+
+.course-list li {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  padding: 2px 0;
+}
+
+.course-list li::before { content: "– "; }
+
+.sidebar-card .course-list li { color: var(--sidebar-muted); }
+
+/* =============================================
+   REVIEW CARDS
+   ============================================= */
+.reviews-section {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  box-shadow: var(--shadow);
+}
+
+.reviews-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.review-card {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1rem;
+}
+
+.sidebar-card .review-card {
+  background: rgba(255,255,255,0.05);
+  border-color: rgba(255,255,255,0.1);
+}
+
+.review-card p {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-style: italic;
+  margin-bottom: 0.6rem;
+}
+
+
+
+/* =============================================
+   CONTACT FORM
+   ============================================= */
+.contact-section {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  box-shadow: var(--shadow);
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.8rem;
+}
+
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  transition: border-color 0.2s;
+  outline: none;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+  border-color: var(--accent);
+}
+
+.contact-form textarea { resize: vertical; }
+
+.contact-form .btn { align-self: flex-start; }
+
+/* =============================================
+   FOOTER
+   ============================================= */
+.content-footer {
+  text-align: center;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  padding: 1rem 0 0.5rem;
+}
+
+/* =============================================
+   MEDIA QUERIES — RESPONSIVE
+   ============================================= */
+
+/* Tablet */
+@media (max-width: 960px) {
+  .three-col {
+    grid-template-columns: 1fr 1fr;
+  }
+  .reviews-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* Mobile */
+@media (max-width: 680px) {
+
+  /* Show hamburger, hide nav links by default */
+  .hamburger { display: block; }
+
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: 60px;
+    left: 0;
+    right: 0;
+    background: var(--bg2);
+    border-bottom: 1px solid var(--border);
+    flex-direction: column;
+    padding: 1rem 2rem;
+    gap: 1rem;
+    z-index: 99;
+  }
+
+  .nav-links.open { display: flex; }
+
+  /* Hero smaller */
+  .hero { padding: 3rem 1.2rem 2.5rem; }
+
+  /* Stack layout */
+  .main-layout {
+    flex-direction: column;
+    padding: 1rem;
+  }
+
+  /* Hide desktop sidebar, show inline */
+  .sidebar {
+    width: 100%;
+    position: static;
+    max-height: none;
+  }
+
+  /* Single column grids */
+  .three-col {
+    grid-template-columns: 1fr;
+  }
+
+  .reviews-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .content-hero { padding: 1.5rem 1rem; }
+}
+
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <div class="logo">
+     <img src="logo.png" alt="Logo" class="logo-img">
+      <span>Sakshi Malkar</span>
+    </div>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">&#9776;</button>
+    <nav class="nav-links" id="nav-links">
+      <a href="#home">Home</a>
+      <a href="#projects">Projects</a>
+      <a href="#live">Live Demo</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero" id="home">
+    <div class="hero-content">
+      <p class="hero-tag">Available for work</p>
+      <h1>Frontend<br/><span>Developer</span></h1>
+      <p class="hero-sub">HTML · CSS · JavaScript · React · Bootstrap</p>
+      <div class="hero-btns">
+        <a href="#projects" class="btn btn-primary">View Projects</a>
+        <a href="#contact" class="btn btn-outline">Contact Me</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- MAIN LAYOUT -->
+  <main class="main-layout">
+
+    <!-- LEFT SIDEBAR (desktop) -->
+    <aside class="sidebar">
+
+      <div class="sidebar-card profile-card">
+        <div class="avatar"></div>
+        <h2>Sakshi Malkar</h2>
+        <p class="role-tag">Frontend Developer</p>
+        <p class="sidebar-note">HTML, CSS & JavaScript strong Foundation with proper layout, styling</p>
+      </div>
+
+      <!-- Projects list -->
+      <div class="sidebar-card" id="projects">
+        <h3 class="section-label">Projects</h3>
+        <ul class="project-list">
+          <li>HTML Only Portfolio</li>
+          <li>Calculator</li>
+          <li>Quiz App</li>
+          <li>Countdown Timer</li>
+          <li>Product Upcoming Page</li>
+        </ul>
+      </div>
+
+      <!-- Work Experience -->
+      <div class="sidebar-card">
+        <h3 class="section-label">Work Experience</h3>
+       <p class="exp-company mt">Connect With Me</p>
+<p class="exp-desc">Feel free to connect with me on LinkedIn for professional networking, collaborations, and career opportunities.</p>
+<a href="https://www.linkedin.com/in/sakshi-malkar/" class="link-blue" target="_blank">Visit my LinkedIn Profile →</a>
+
+        <p class="exp-company mt">OpenSource Work</p>
+        <p class="exp-desc">Contributed to 50 opensource projects. Made my own projects with 30 GitHub Stars.</p>
+        <a href="https://github.com/sakshimalkar" class="link-blue" target="_blank">Visit my GitHub Profile →</a>
+      </div>
+
+      <!-- Education -->
+      <div class="sidebar-card">
+        <h3 class="section-label">Education</h3>
+        <p class="exp-desc">BCA Graduated with 7 CGPA from shivaji Univercity 2025 passout. strong foundation in programming languages.</p>
+        <ul class="course-list">
+         <li>HTML5 & Semantic Web Design</li>
+<li>CSS3 & Bootstrap Responsive Layouts</li>
+<li>JavaScript & React.js (DOM Manipulation)</li>
+<li>Python Programming With Flutter</li>
+<li>MySQL Database Management</li>
+<li>Web Application Development</li>
+<li>Debugging & Problem Solving</li>
+<li>Git & GitHub Version Control & Website Hosting</li>
+<li>Basic UI/UX Design & AWS</li>
+        </ul>
+      </div>
+
+     
+
+      <footer class="sidebar-footer">© all rights reserved 2026</footer>
+    </aside>
+
+    <!-- MAIN CONTENT (desktop right panel) -->
+    <section class="content-area">
+
+      <!-- Hero Banner -->
+      <div class="content-hero">
+        <h1>Frontend Developer</h1>
+        <p>HTML, CSS & JavaScript strong Foundation with proper layout, styling</p>
+      </div>
+
+      <!-- 3-column grid -->
+      <div class="three-col">
+
+        <!-- Projects -->
+        <div class="col-card">
+          <h3 class="section-label">Projects</h3>
+          <ul class="project-list">
+            <li>HTML Only Portfolio</li>
+            <li>Calculator</li>
+            <li>Quiz App</li>
+            <li>Countdown Timer</li>
+            <li>Product Upcoming Page</li>
+          </ul>
+        </div>
+
+        <!-- Work Experience -->
+        <div class="col-card">
+          <h3 class="section-label">Work Experience</h3>
+          <p class="exp-company mt">Connect With Me</p>
+<p class="exp-desc">Feel free to connect with me on LinkedIn for professional networking, collaborations, and career opportunities.</p>
+<a href="https://www.linkedin.com/in/sakshi-malkar/" class="link-blue" target="_blank">Visit my LinkedIn Profile →</a>
+          <p class="exp-company mt">OpenSource Work</p>
+          <p class="exp-desc">Contributed to 50 opensource projects. Made my own projects with 30 GitHub Stars.</p>
+          <a href="https://github.com/sakshimalkar" class="link-blue" target="_blank">Visit my GitHub Profile →</a>
+        </div>
+
+        <!-- Education -->
+        <div class="col-card">
+          <h3 class="section-label">Education</h3>
+          <p class="exp-desc">BCA Graduated with 7 CGPA from shivaji Univercity 2025 passout. strong foundation in programming languages.</p>
+          <p class="courses-title">Courses I took:</p>
+          <ul class="course-list">
+           <li>HTML5 & Semantic Web Design</li>
+<li>CSS3 & Bootstrap Responsive Layouts</li>
+<li>JavaScript & React.js (DOM Manipulation)</li>
+<li>Python Programming With Flutter</li>
+<li>MySQL Database Management</li>
+<li>Web Application Development</li>
+<li>Debugging & Problem Solving</li>
+<li>Git & GitHub Version Control & Website Hosting</li>
+<li>Basic UI/UX Design & AWS</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="reviews-section" id="live">
+  <h3 class="section-label center">Live Demo Project</h3>
+
+  <div class="reviews-grid">
+
+    <div class="review-card">
+      <img src="cal.png" style="border-radius:10px;margin-bottom:10px;">
+      <p>A simple calculator 🧮 built with HTML, CSS, and JavaScript to perform basic arithmetic operations.</p>
+      <a href=" https://sakshimalkar.github.io/calculator/" class="link-blue" target="_blank">View Project →</a>
+    </div>
+
+    <div class="review-card">
+      <img src="quize.png" style="border-radius:10px;margin-bottom:10px;">
+      <p>An interactive quiz app 🧠 that shows questions, checks answers, and displays the final score.</p>
+      <a href="https://sakshimalkar.github.io/QuizeApp/" class="link-blue" target="_blank">View Project →</a>
+    </div>
+
+    <div class="review-card">
+      <img src="timer.png" style="border-radius:10px;margin-bottom:10px;">
+      <p>A timer app ⏳ where users set minutes and control the countdown with start, pause, and reset buttons.</p>
+      <a href=" https://sakshimalkar.github.io/CountDown/" class="link-blue" target="_blank">View Project →</a>
+    </div>
+
+  </div>
+</div>
+
+      <!-- Contact Form -->
+      <div class="contact-section" id="contact">
+        <h3 class="section-label center">Get In Touch</h3>
+        <form class="contact-form">
+          <div class="form-row">
+            <input type="text" placeholder="Your Name" required />
+            <input type="email" placeholder="Your Email" required />
+          </div>
+          <input type="text" placeholder="Subject" />
+          <textarea rows="5" placeholder="Your Message" required></textarea>
+          <button type="submit" class="btn btn-primary">Send Message</button>
+        </form>
+      </div>
+
+      <footer class="content-footer">© all rights reserved 2026</footer>
+    </section>
+
+  </main>
+
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.getElementById('nav-links');
+    hamburger.addEventListener('click', () => {
+      navLinks.classList.toggle('open');
+    });
+  </script>
+
+</body>
+</html>
